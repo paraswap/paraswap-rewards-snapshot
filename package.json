@@ -1,0 +1,14 @@
+{
+  "name": "paraswap-snapshot",
+  "version": "1.0.0",
+  "description": "Snapshot code for Paraswap Volume Mining",
+  "main": "index.js",
+  "author": "shresth@paraswap.io",
+  "license": "MIT",
+  "dependencies": {
+    "@ethersproject/providers": "5.4.5",
+    "csv-parser": "3.0.0",
+    "dotenv": "10.0.0",
+    "lodash": "4.17.21"
+  }
+}
