@@ -21,24 +21,29 @@ async function getNetworkBalanceNonce(network, users, fetchedUsers) {
     const provider = new providers.JsonRpcProvider(ProviderURLs[network]);
     const batchedUsers = _.chunk(users, parallelLimit);
     for (let batchIndex in batchedUsers) {
-        const batch = batchedUsers[batchIndex];
-        const _balanceNonce = await Promise.all(batch.map(async _userAddress => {
-            if(fetchedUsers[`${_userAddress}_${network}`])
-                return;
-            return {
-                balance: (await provider.getBalance(_userAddress)).toString(),
-                txCount: await provider.getTransactionCount(_userAddress) 
-            };
-        }));
-        batch.map(
-            (_userAddress, i) => {
+        try {
+            const batch = batchedUsers[batchIndex];
+            const _balanceNonce = await Promise.all(batch.map(async _userAddress => {
                 if(fetchedUsers[`${_userAddress}_${network}`])
                     return;
-                fetchedUsers[`${_userAddress}_${network}`] = true;
-                fs.appendFileSync('balance.csv', `${_userAddress},${network},${_balanceNonce[i].balance},${_balanceNonce[i].txCount}\n`);
-            }
-        );
-        console.log(`(network: ${network}) Fetched ${batchIndex} out of ${batchedUsers.length}`);
+                return {
+                    balance: (await provider.getBalance(_userAddress)).toString(),
+                    txCount: await provider.getTransactionCount(_userAddress) 
+                };
+            }));
+            batch.map(
+                (_userAddress, i) => {
+                    if(fetchedUsers[`${_userAddress}_${network}`])
+                        return;
+                    fetchedUsers[`${_userAddress}_${network}`] = true;
+                    fs.appendFileSync('balance.csv', `${_userAddress},${network},${_balanceNonce[i].balance},${_balanceNonce[i].txCount}\n`);
+                }
+            );
+            console.log(`(network: ${network}) Fetched ${batchIndex} out of ${batchedUsers.length}`);
+        } catch(e) {
+            // We can simply run the script again if some batch was skipped and we want to retry
+            console.error(`(network: ${network}) Skipped ${batchIndex}`, e);
+        }
     }
 }
 
