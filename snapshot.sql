@@ -154,7 +154,7 @@ WHERE srctoken in
   AND desttoken in
     (SELECT tokenaddress
      FROM topethereumtokens)
-  AND txtimestamp < 1633730399
+  AND txtimestamp < 1633730399 AND txtimestamp > 1614977606
   AND NOT (srctoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
            AND desttoken = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2')
   AND NOT (desttoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -222,7 +222,7 @@ WHERE srctoken in
   AND desttoken in
     (SELECT tokenaddress
      FROM toppolygontokens)
-  AND txtimestamp < 1633730399
+  AND txtimestamp < 1633730399 AND txtimestamp > 1614977606
   AND NOT (srctoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
            AND desttoken = '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270')
   AND NOT (desttoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -291,7 +291,7 @@ WHERE srctoken in
   AND desttoken in
     (SELECT tokenaddress
      FROM topbsctokens)
-  AND txtimestamp < 1633730399
+  AND txtimestamp < 1633730399 AND txtimestamp > 1614977606
   AND NOT (srctoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
            AND desttoken = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
   AND NOT (desttoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -334,6 +334,7 @@ WHERE srctoken in
   AND desttoken in
     (SELECT tokenaddress
      FROM topavalanchetokens)
+  AND txtimestamp < 1633730399 AND txtimestamp > 1614977606
   AND NOT (srctoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
            AND desttoken = '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7')
   AND NOT (desttoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -360,15 +361,22 @@ WHERE ((network = 1
        OR (network = 56
            AND balance > 250000000000000000)
        OR (network = 137
-           AND balance > 2000000000000000000)
+           AND balance > 20000000000000000000)
        OR (network = 43114
            AND balance > 900000000000000000))
   OR txcount > 50) as networkFilteredUsers
   Where allfilteredtxs.useraddress = networkFilteredUsers.useraddress
   Group by allfilteredtxs.useraddress having count(*) > 5;
 
+-- Add indexes to optimise query
+CREATE INDEX EligibleUsers_useraddress ON EligibleUsers(useraddress);
+
+CREATE INDEX AllFilteredTxs_useraddress ON AllFilteredTxs(useraddress);
+CREATE INDEX AllFilteredTxs_srcamountusd ON AllFilteredTxs(srcamountusd);
+CREATE INDEX AllFilteredTxs_network ON AllFilteredTxs(network);
+
 -- create queries for points
-CREATE VIEW txCountUserPoints as
+CREATE materialized VIEW txCountUserPoints as
 SELECT allfilteredtxs.useraddress,
        CASE
            WHEN count(*) > 10 THEN 1
@@ -379,7 +387,7 @@ FROM allfilteredtxs,
 WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
-CREATE VIEW maxTxValueUserPoints as 
+CREATE materialized VIEW maxTxValueUserPoints as 
 SELECT allfilteredtxs.useraddress,
        CASE
             when max(srcamountusd) > 100000 then 4
@@ -393,7 +401,7 @@ FROM allfilteredtxs,
 WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
-CREATE VIEW userVolumeUserPoints as 
+CREATE materialized VIEW userVolumeUserPoints as 
 SELECT allfilteredtxs.useraddress,
        CASE
             when sum(srcamountusd) > 100000 then 4
@@ -407,7 +415,7 @@ FROM allfilteredtxs,
 WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
-CREATE VIEW networkUserPoints as 
+CREATE materialized VIEW networkUserPoints as 
 SELECT allfilteredtxs.useraddress,
        CASE
             when count(distinct network) > 1 then 1
@@ -424,5 +432,8 @@ SELECT txCountUserPoints.useraddress,
 FROM txCountUserPoints,
      maxTxValueUserPoints,
      userVolumeUserPoints,
-     networkUserPoints;
-
+     networkUserPoints
+WHERE 
+    txCountUserPoints.useraddress = maxTxValueUserPoints.useraddress and 
+    txCountUserPoints.useraddress = userVolumeUserPoints.useraddress and
+    txCountUserPoints.useraddress = networkUserPoints.useraddress;
