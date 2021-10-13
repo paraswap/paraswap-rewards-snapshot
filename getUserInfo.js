@@ -13,6 +13,13 @@ const ProviderURLs = {
     43114: process.env.HTTP_PROVIDER_43114,
 };
 
+const SnapshotBlockNumber = {
+    1: 13380733,
+    156: 11605446,
+    137: 19999042,
+    43114: 5389470,
+};
+
 const networks = [1, 56, 137, 43114];
 const parallelLimit = 20;
 
@@ -27,8 +34,8 @@ async function getNetworkBalanceNonce(network, users, fetchedUsers) {
                 if(fetchedUsers[`${_userAddress}_${network}`])
                     return;
                 return {
-                    balance: (await provider.getBalance(_userAddress)).toString(),
-                    txCount: await provider.getTransactionCount(_userAddress) 
+                    balance: (await provider.getBalance(_userAddress, SnapshotBlockNumber[network])).toString(),
+                    txCount: await provider.getTransactionCount(_userAddress, SnapshotBlockNumber[network]) 
                 };
             }));
             batch.map(
