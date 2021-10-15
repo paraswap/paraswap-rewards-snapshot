@@ -107,21 +107,67 @@ FROM
           txorigin,
           txtarget,
           NULL AS UUID,
-          CASE
-              WHEN referrer in ('argents',
-                                '3') THEN initiator
-              -- WHEN initiator in ('0x9008d19f58aabd9ed0d60971565aa8510560ab41',
-              --                    '0x3328f5f2cecaf00a2443082b657cedeaf70bfaef') THEN
-              --        (SELECT substring(trader
-              --                          FROM 99
-              --                          FOR 42)
-              --         FROM CowSwapTxs
-              --         WHERE substring(TRANSACTION
-              --                         FROM 118
-              --                         FOR 66) = ethereum_v4.txhash)
-              ELSE txorigin
-          END AS userAddress
-   FROM ethereum_v4
+          initiator as userAddress
+   FROM ethereum_v4 WHERE referrer IN ('argents','3')
+   UNION SELECT id,
+          augustus,
+          augustusversion,
+          side,
+          METHOD,
+          initiator,
+          beneficiary,
+          blocknumber,
+          blockhash,
+          txtimestamp,
+          referrer,
+          srctoken,
+          desttoken,
+          srcamount,
+          srcamountusd,
+          destamount,
+          destamountusd,
+          expectedamount,
+          ethereum_v4.txhash,
+          txgasprice,
+          txgasused,
+          txorigin,
+          txtarget,
+          NULL AS UUID,
+          CowSwapTxs.owner as userAddress
+    FROM ethereum_v4, CowSwapTxs
+    WHERE 
+        initiator IN ('0x9008d19f58aabd9ed0d60971565aa8510560ab41', '0x3328f5f2cecaf00a2443082b657cedeaf70bfaef') 
+        AND CowSwapTxs.txHash = ethereum_v4.txhash
+        AND CowSwapTxs.selltoken = ethereum_v4.srctoken
+    UNION SELECT id,
+          augustus,
+          augustusversion,
+          side,
+          METHOD,
+          initiator,
+          beneficiary,
+          blocknumber,
+          blockhash,
+          txtimestamp,
+          referrer,
+          srctoken,
+          desttoken,
+          srcamount,
+          srcamountusd,
+          destamount,
+          destamountusd,
+          expectedamount,
+          txhash,
+          txgasprice,
+          txgasused,
+          txorigin,
+          txtarget,
+          NULL AS UUID,
+          txorigin as userAddress
+    FROM ethereum_v4
+    WHERE 
+        initiator NOT IN ('0x9008d19f58aabd9ed0d60971565aa8510560ab41', '0x3328f5f2cecaf00a2443082b657cedeaf70bfaef')  
+        AND referrer NOT IN ('argents','3')
    UNION SELECT id,
                 augustus,
                 augustusversion,
@@ -154,7 +200,8 @@ WHERE srctoken in
   AND desttoken in
     (SELECT tokenaddress
      FROM topethereumtokens)
-  AND txtimestamp < 1633730399 AND txtimestamp > 1614977606
+  AND txtimestamp < 1633730399
+  AND txtimestamp > 1614977606
   AND NOT (srctoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
            AND desttoken = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2')
   AND NOT (desttoken = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
