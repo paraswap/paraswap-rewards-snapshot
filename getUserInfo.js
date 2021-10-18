@@ -43,7 +43,7 @@ async function getNetworkBalanceNonce(network, users, fetchedUsers) {
                     if(fetchedUsers[`${_userAddress}_${network}`])
                         return;
                     fetchedUsers[`${_userAddress}_${network}`] = true;
-                    fs.appendFileSync('balance.csv', `${_userAddress},${network},${_balanceNonce[i].balance},${_balanceNonce[i].txCount}\n`);
+                    fs.appendFileSync('./data/balance.csv', `${_userAddress},${network},${_balanceNonce[i].balance},${_balanceNonce[i].txCount}\n`);
                 }
             );
             console.log(`(network: ${network}) Fetched ${batchIndex} out of ${batchedUsers.length}`);
@@ -57,7 +57,7 @@ async function getNetworkBalanceNonce(network, users, fetchedUsers) {
 async function main() {
     const getUsersPromise = new Promise((resolve, reject) => {
         let _users = {};
-        fs.createReadStream('./paraswap-distinct-users.csv').pipe(csv())
+        fs.createReadStream('./data/paraswap-distinct-users.csv').pipe(csv())
             .on('data', function(data){
                 if (!_users[data.network])
                     _users[data.network] = [];
@@ -69,7 +69,7 @@ async function main() {
     });
     const fetchedUsersPromise = new Promise((resolve, reject) => {
         let _users = {};
-        fs.createReadStream('./balance.csv').pipe(csv())
+        fs.createReadStream('./data/balance.csv').pipe(csv())
             .on('data', function(data){
                 _users[`${data.userAddress}_${data.network}`] = true;
             })
