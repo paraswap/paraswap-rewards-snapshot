@@ -406,13 +406,19 @@ CREATE materialized VIEW AllFilteredTxs AS
    UNION SELECT *
    FROM FilteredAvalancheTXs);
 
--- filter eligible users
+-- Add indexes to optimise query
 
-CREATE materialized VIEW EligibleUsers AS
-SELECT allfilteredtxs.useraddress
-FROM allfilteredtxs,
+CREATE INDEX AllFilteredTxs_useraddress ON AllFilteredTxs(useraddress);
 
-  (SELECT distinct(useraddress)
+CREATE INDEX AllFilteredTxs_srcamountusd ON AllFilteredTxs(srcamountusd);
+
+CREATE INDEX AllFilteredTxs_network ON AllFilteredTxs(network);
+
+CREATE INDEX AllFilteredTxs_referrer ON AllFilteredTxs(referrer);
+
+-- filter eligible users 
+CREATE materialized VIEW NetworkFilteredUsers AS
+SELECT distinct(useraddress)
    FROM userInfo
    WHERE ((network = 1
            AND balance > 28000000000000000)
@@ -422,23 +428,25 @@ FROM allfilteredtxs,
               AND balance > 20000000000000000000)
           OR (network = 43114
               AND balance > 900000000000000000))
-     OR txcount > 50) AS networkFilteredUsers
-WHERE allfilteredtxs.useraddress = networkFilteredUsers.useraddress
-GROUP BY allfilteredtxs.useraddress
+     OR txcount > 50;
+
+CREATE INDEX NetworkFilteredUsers_useraddress ON NetworkFilteredUsers(useraddress);
+
+CREATE materialized VIEW EligibleUsers AS
+SELECT useraddress
+FROM allfilteredtxs
+WHERE useraddress IN
+    (SELECT useraddress
+     FROM networkFilteredUsers)
+  OR referrer IN ('argents',
+                  '3')
+GROUP BY useraddress
 HAVING count(*) > 5;
 
 -- Add indexes to optimise query
 
 CREATE INDEX EligibleUsers_useraddress ON EligibleUsers(useraddress);
 
-
-CREATE INDEX AllFilteredTxs_useraddress ON AllFilteredTxs(useraddress);
-
-
-CREATE INDEX AllFilteredTxs_srcamountusd ON AllFilteredTxs(srcamountusd);
-
-
-CREATE INDEX AllFilteredTxs_network ON AllFilteredTxs(network);
 
 -- create queries for points
 
