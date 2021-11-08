@@ -514,5 +514,6 @@ SELECT useraddress AS address,
            WHEN sumPoints <= 7
                 AND sumPoints > 3 THEN '6000000000000000000000'
            WHEN sumPoints <= 3 THEN '4000000000000000000000'
-       END AS earnings
+       END AS earnings,
+       'user' AS reasons
 FROM TotalPoints;
