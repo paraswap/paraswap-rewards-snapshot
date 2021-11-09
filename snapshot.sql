@@ -109,7 +109,7 @@ FROM
           NULL AS UUID,
           initiator AS userAddress
    FROM ethereum_v4
-   WHERE referrer IN ('argents',
+   WHERE referrer IN ('argent',
                       '3')
    UNION SELECT id,
                 augustus,
@@ -170,7 +170,7 @@ FROM
    FROM ethereum_v4
    WHERE initiator NOT IN ('0x9008d19f58aabd9ed0d60971565aa8510560ab41',
                            '0x3328f5f2cecaf00a2443082b657cedeaf70bfaef')
-     AND referrer NOT IN ('argents',
+     AND referrer NOT IN ('argent',
                           '3')
    UNION SELECT id,
                 augustus,
@@ -406,6 +406,14 @@ CREATE materialized VIEW AllFilteredTxs AS
    UNION SELECT *
    FROM FilteredAvalancheTXs);
 
+-- Fetch all uniue address network pairs
+SELECT useraddress, network FROM allfilteredtxs GROUP BY (useraddress, network);
+
+-- For each pair fetch the balance and nonce of the user address using getUserInfo.js
+-- Import all the balance info to the database
+CREATE TABLE userInfo (useraddress varchar, network int, balance numeric, txCount numeric, PRIMARY KEY(userAddress, network));
+\copy userInfo From './data/balance.csv' WITH (Format csv);
+
 -- Add indexes to optimise query
 
 CREATE INDEX AllFilteredTxs_useraddress ON AllFilteredTxs(useraddress);
@@ -438,7 +446,7 @@ FROM allfilteredtxs
 WHERE useraddress IN
     (SELECT useraddress
      FROM networkFilteredUsers)
-  OR referrer IN ('argents',
+  OR referrer IN ('argent',
                   '3')
 GROUP BY useraddress
 HAVING count(*) > 5;
