@@ -451,6 +451,14 @@ WHERE useraddress IN
 GROUP BY useraddress
 HAVING count(*) > 5;
 
+-- Export all the eligible users to ./data/eligible-users.json for manual inspection
+SELECT allfilteredtxs.useraddress, network
+FROM allfilteredtxs,
+     eligibleusers
+WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+GROUP BY (allfilteredtxs.useraddress, network);
+
+
 -- Add indexes to optimise query
 
 CREATE INDEX EligibleUsers_useraddress ON EligibleUsers(useraddress);
