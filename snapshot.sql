@@ -451,17 +451,29 @@ WHERE useraddress IN
 GROUP BY useraddress
 HAVING count(*) > 5;
 
--- Export all the eligible users to ./data/eligible-users.json for manual inspection
+-- Add indexes to optimise query
+
+CREATE INDEX EligibleUsers_useraddress ON EligibleUsers(useraddress);
+
+-- Export all the eligible users to ./data/eligible-users.json for blob inspection
+
 SELECT allfilteredtxs.useraddress, network
 FROM allfilteredtxs,
      eligibleusers
 WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
 GROUP BY (allfilteredtxs.useraddress, network);
 
+-- Import blacklisted addresses based on blobs and balance
 
--- Add indexes to optimise query
+CREATE TABLE BlobUserBlacklist (useraddress varchar, PRIMARY KEY(userAddress));
+\copy BlobUserBlacklist From './data/userBlobsBlacklist.csv' WITH (Format csv);
 
-CREATE INDEX EligibleUsers_useraddress ON EligibleUsers(useraddress);
+CREATE VIEW EligibleUsersWithBlacklist AS
+SELECT useraddress
+FROM EligibleUsers
+WHERE useraddress NOT IN 
+    (SELECT useraddress
+     FROM BlobUserBlacklist);
 
 
 -- create queries for points
@@ -473,8 +485,8 @@ SELECT allfilteredtxs.useraddress,
            ELSE 0
        END AS txCountPoints
 FROM allfilteredtxs,
-     eligibleusers
-WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+     eligibleuserswithblacklist
+WHERE allfilteredtxs.useraddress = eligibleuserswithblacklist.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
 
@@ -488,8 +500,8 @@ SELECT allfilteredtxs.useraddress,
            ELSE 0
        END AS maxTxValuePoints
 FROM allfilteredtxs,
-     eligibleusers
-WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+     eligibleuserswithblacklist
+WHERE allfilteredtxs.useraddress = eligibleuserswithblacklist.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
 
@@ -503,8 +515,8 @@ SELECT allfilteredtxs.useraddress,
            ELSE 0
        END AS userVolumePoints
 FROM allfilteredtxs,
-     eligibleusers
-WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+     eligibleuserswithblacklist
+WHERE allfilteredtxs.useraddress = eligibleuserswithblacklist.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
 
@@ -515,8 +527,8 @@ SELECT allfilteredtxs.useraddress,
            ELSE 0
        END AS networkPoints
 FROM allfilteredtxs,
-     eligibleusers
-WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+     eligibleuserswithblacklist
+WHERE allfilteredtxs.useraddress = eligibleuserswithblacklist.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
 

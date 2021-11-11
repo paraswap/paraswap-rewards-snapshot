@@ -11,12 +11,14 @@ const EtherscanKeys = {
     1: process.env.ETHERSCAN_API_KEY,
     56: process.env.BSCSCAN_API_KEY,
     137: process.env.POLYGONSCAN_API_KEY,
+    43114: process.env.SNOWTRACE
 };
 
 const EtherscanURLs = {
     1: 'https://api.etherscan.io',
     56: 'https://api.bscscan.com',
     137: 'https://api.polygonscan.com',
+    43114: 'https://api.snowtrace.io'
 }
 
 function waitforme(milisec) {
@@ -29,9 +31,6 @@ const eligibleUsersMap = eligibleUsers.reduce((acc, u) => { acc[u.useraddress.to
 
 async function fetchUserTransfers(useraddress, network, dept, result) {
     if (dept < 0)
-        return;
-
-    if (network === 43114)
         return;
 
     const key = `${useraddress.toLowerCase()}_${network}`;
@@ -102,6 +101,7 @@ async function fetchAllTransfers() {
         fetchAllTransfersNetwork(eligibleUsers.filter(u => u.network === 1)),
         fetchAllTransfersNetwork(eligibleUsers.filter(u => u.network === 56)),
         fetchAllTransfersNetwork(eligibleUsers.filter(u => u.network === 137)),
+        fetchAllTransfersNetwork(eligibleUsers.filter(u => u.network === 43114)),
     ])
 }
 
