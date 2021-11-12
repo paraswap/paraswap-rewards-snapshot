@@ -1,3 +1,212 @@
+-- Create Tables and Import data
+CREATE TABLE avalanche_v5 (
+    id character varying(100) NOT NULL,
+    uuid character varying(36) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE bsc_v4 (
+    id character varying(100) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    referrer character varying(100),
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL,
+    uuid character varying(50)
+);
+
+CREATE TABLE bsc_v5 (
+    id character varying(100) NOT NULL,
+    uuid character varying(36) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE ethereum_v4 (
+    id character varying(100) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    referrer character varying(100),
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL,
+    uuid character varying(50)
+);
+
+CREATE TABLE ethereum_v5 (
+    id character varying(100) NOT NULL,
+    uuid character varying(36) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE polygon_v4 (
+    id character varying(100) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    referrer character varying(100),
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE polygon_v5 (
+    id character varying(100) NOT NULL,
+    uuid character varying(36) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE cowswaptxs (
+    sellamount numeric,
+    buyamount numeric,
+    feeamount numeric,
+    owner character varying,
+    txhash character varying,
+    selltoken character varying,
+    buytoken character varying
+);
+
+\copy avalanche_v5 From './data/avalanche_v5.csv' WITH (Format csv);
+
+\copy polygon_v4 From './data/polygon_v4.csv' WITH (Format csv);
+\copy polygon_v5 From './data/polygon_v5.csv' WITH (Format csv);
+
+\copy ethereum_v4 From './data/ethereum_v4.csv' WITH (Format csv);
+\copy ethereum_v5 From './data/ethereum_v5.csv' WITH (Format csv);
+
+\copy bsc_v4 From './data/bsc_v4.csv' WITH (Format csv);
+\copy bsc_v5 From './data/bsc_v5.csv' WITH (Format csv);
+
+\copy cowswaptxs From './data/cow-swap-txs.csv' WITH (Format csv);
+
+
 -- Create view for top tokens
 
 CREATE VIEW topEthereumTokens AS
