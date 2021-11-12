@@ -1,3 +1,212 @@
+-- Create Tables and Import data
+CREATE TABLE avalanche_v5 (
+    id character varying(100) NOT NULL,
+    uuid character varying(36) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE bsc_v4 (
+    id character varying(100) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    referrer character varying(100),
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL,
+    uuid character varying(50)
+);
+
+CREATE TABLE bsc_v5 (
+    id character varying(100) NOT NULL,
+    uuid character varying(36) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE ethereum_v4 (
+    id character varying(100) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    referrer character varying(100),
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL,
+    uuid character varying(50)
+);
+
+CREATE TABLE ethereum_v5 (
+    id character varying(100) NOT NULL,
+    uuid character varying(36) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE polygon_v4 (
+    id character varying(100) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    referrer character varying(100),
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE polygon_v5 (
+    id character varying(100) NOT NULL,
+    uuid character varying(36) NOT NULL,
+    augustus character varying(100) NOT NULL,
+    augustusversion character varying(10) NOT NULL,
+    side character varying(10) NOT NULL,
+    method character varying(40) NOT NULL,
+    initiator character varying(50) NOT NULL,
+    beneficiary character varying(50) NOT NULL,
+    blocknumber numeric NOT NULL,
+    blockhash character varying(70) NOT NULL,
+    txtimestamp numeric NOT NULL,
+    srctoken character varying(50) NOT NULL,
+    desttoken character varying(50) NOT NULL,
+    srcamount numeric NOT NULL,
+    srcamountusd numeric,
+    destamount numeric NOT NULL,
+    destamountusd numeric,
+    expectedamount numeric,
+    txhash character varying(77) NOT NULL,
+    txgasprice numeric NOT NULL,
+    txgasused numeric NOT NULL,
+    txorigin character varying(50) NOT NULL,
+    txtarget character varying(50) NOT NULL
+);
+
+CREATE TABLE cowswaptxs (
+    sellamount numeric,
+    buyamount numeric,
+    feeamount numeric,
+    owner character varying,
+    txhash character varying,
+    selltoken character varying,
+    buytoken character varying
+);
+
+\copy avalanche_v5 From './data/avalanche_v5.csv' WITH (Format csv);
+
+\copy polygon_v4 From './data/polygon_v4.csv' WITH (Format csv);
+\copy polygon_v5 From './data/polygon_v5.csv' WITH (Format csv);
+
+\copy ethereum_v4 From './data/ethereum_v4.csv' WITH (Format csv);
+\copy ethereum_v5 From './data/ethereum_v5.csv' WITH (Format csv);
+
+\copy bsc_v4 From './data/bsc_v4.csv' WITH (Format csv);
+\copy bsc_v5 From './data/bsc_v5.csv' WITH (Format csv);
+
+\copy cowswaptxs From './data/cow-swap-txs.csv' WITH (Format csv);
+
+
 -- Create view for top tokens
 
 CREATE VIEW topEthereumTokens AS
@@ -109,7 +318,7 @@ FROM
           NULL AS UUID,
           initiator AS userAddress
    FROM ethereum_v4
-   WHERE referrer IN ('argents',
+   WHERE referrer IN ('argent',
                       '3')
    UNION SELECT id,
                 augustus,
@@ -170,7 +379,7 @@ FROM
    FROM ethereum_v4
    WHERE initiator NOT IN ('0x9008d19f58aabd9ed0d60971565aa8510560ab41',
                            '0x3328f5f2cecaf00a2443082b657cedeaf70bfaef')
-     AND referrer NOT IN ('argents',
+     AND referrer NOT IN ('argent',
                           '3')
    UNION SELECT id,
                 augustus,
@@ -406,6 +615,14 @@ CREATE materialized VIEW AllFilteredTxs AS
    UNION SELECT *
    FROM FilteredAvalancheTXs);
 
+-- Fetch all uniue address network pairs
+\copy (SELECT useraddress, network FROM allfilteredtxs GROUP BY (useraddress, network)) to './data/paraswap-distinct-users.csv' csv header;
+
+-- For each pair fetch the balance and nonce of the user address using getUserInfo.js
+-- Import all the balance info to the database
+CREATE TABLE userInfo (useraddress varchar, network int, balance numeric, txCount numeric, PRIMARY KEY(userAddress, network));
+\copy userInfo From './data/balance.csv' WITH (Format csv);
+
 -- Add indexes to optimise query
 
 CREATE INDEX AllFilteredTxs_useraddress ON AllFilteredTxs(useraddress);
@@ -435,10 +652,11 @@ CREATE INDEX NetworkFilteredUsers_useraddress ON NetworkFilteredUsers(useraddres
 CREATE materialized VIEW EligibleUsers AS
 SELECT useraddress
 FROM allfilteredtxs
-WHERE useraddress IN
-    (SELECT useraddress
-     FROM networkFilteredUsers)
-  OR referrer IN ('argents',
+WHERE EXISTS
+    (SELECT 1
+     FROM networkFilteredUsers
+     WHERE networkFilteredUsers.useraddress = allfilteredtxs.useraddress)
+  OR referrer IN ('argent',
                   '3')
 GROUP BY useraddress
 HAVING count(*) > 5;
@@ -446,6 +664,29 @@ HAVING count(*) > 5;
 -- Add indexes to optimise query
 
 CREATE INDEX EligibleUsers_useraddress ON EligibleUsers(useraddress);
+
+-- Export all the eligible users to ./data/eligible-users.json for blob inspection
+
+CREATE VIEW EligibleUsersNetwork AS
+SELECT allfilteredtxs.useraddress, network
+FROM allfilteredtxs,
+     eligibleusers
+WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+GROUP BY (allfilteredtxs.useraddress, network);
+
+\copy (SELECT regexp_replace(json_agg(t)::TEXT, '\s*\n\s*', '', 'g') FROM EligibleUsersNetwork t) TO './data/eligible-users.json';
+
+-- Import blacklisted addresses based on blobs and balance
+
+CREATE TABLE BlobUserBlacklist (useraddress varchar, PRIMARY KEY(userAddress));
+\copy BlobUserBlacklist From './data/userBlobsBlacklist.csv' WITH (Format csv);
+
+CREATE VIEW EligibleUsersWithBlacklist AS
+SELECT useraddress
+FROM EligibleUsers
+WHERE useraddress NOT IN 
+    (SELECT useraddress
+     FROM BlobUserBlacklist);
 
 
 -- create queries for points
@@ -457,8 +698,8 @@ SELECT allfilteredtxs.useraddress,
            ELSE 0
        END AS txCountPoints
 FROM allfilteredtxs,
-     eligibleusers
-WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+     eligibleuserswithblacklist
+WHERE allfilteredtxs.useraddress = eligibleuserswithblacklist.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
 
@@ -472,8 +713,8 @@ SELECT allfilteredtxs.useraddress,
            ELSE 0
        END AS maxTxValuePoints
 FROM allfilteredtxs,
-     eligibleusers
-WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+     eligibleuserswithblacklist
+WHERE allfilteredtxs.useraddress = eligibleuserswithblacklist.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
 
@@ -487,8 +728,8 @@ SELECT allfilteredtxs.useraddress,
            ELSE 0
        END AS userVolumePoints
 FROM allfilteredtxs,
-     eligibleusers
-WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+     eligibleuserswithblacklist
+WHERE allfilteredtxs.useraddress = eligibleuserswithblacklist.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
 
@@ -499,8 +740,8 @@ SELECT allfilteredtxs.useraddress,
            ELSE 0
        END AS networkPoints
 FROM allfilteredtxs,
-     eligibleusers
-WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
+     eligibleuserswithblacklist
+WHERE allfilteredtxs.useraddress = eligibleuserswithblacklist.useraddress
 GROUP BY allfilteredtxs.useraddress;
 
 
@@ -516,12 +757,15 @@ WHERE txCountUserPoints.useraddress = maxTxValueUserPoints.useraddress
   AND txCountUserPoints.useraddress = networkUserPoints.useraddress;
 
 
+CREATE VIEW AirdropUsers AS
 SELECT useraddress AS address,
        CASE
-           WHEN sumPoints > 7 THEN '8000000000000000000000'
+           WHEN sumPoints > 7 THEN '10400000000000000000000'
            WHEN sumPoints <= 7
-                AND sumPoints > 3 THEN '6000000000000000000000'
-           WHEN sumPoints <= 3 THEN '4000000000000000000000'
+                AND sumPoints > 3 THEN '7800000000000000000000'
+           WHEN sumPoints <= 3 THEN '5200000000000000000000'
        END AS earnings,
        'user' AS reasons
 FROM TotalPoints;
+
+\copy (SELECT regexp_replace(json_agg(t)::TEXT, '\s*\n\s*', '', 'g') FROM AirdropUsers t) TO './data/airdrop-users.json';
