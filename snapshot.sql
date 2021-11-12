@@ -616,7 +616,7 @@ CREATE materialized VIEW AllFilteredTxs AS
    FROM FilteredAvalancheTXs);
 
 -- Fetch all uniue address network pairs
-SELECT useraddress, network FROM allfilteredtxs GROUP BY (useraddress, network);
+\copy (SELECT useraddress, network FROM allfilteredtxs GROUP BY (useraddress, network)) to './data/paraswap-distinct-users.csv' csv header;
 
 -- For each pair fetch the balance and nonce of the user address using getUserInfo.js
 -- Import all the balance info to the database
@@ -652,9 +652,10 @@ CREATE INDEX NetworkFilteredUsers_useraddress ON NetworkFilteredUsers(useraddres
 CREATE materialized VIEW EligibleUsers AS
 SELECT useraddress
 FROM allfilteredtxs
-WHERE useraddress IN
-    (SELECT useraddress
-     FROM networkFilteredUsers)
+WHERE EXISTS
+    (SELECT 1
+     FROM networkFilteredUsers
+     WHERE networkFilteredUsers.useraddress = allfilteredtxs.useraddress)
   OR referrer IN ('argent',
                   '3')
 GROUP BY useraddress
@@ -666,11 +667,14 @@ CREATE INDEX EligibleUsers_useraddress ON EligibleUsers(useraddress);
 
 -- Export all the eligible users to ./data/eligible-users.json for blob inspection
 
+CREATE VIEW EligibleUsersNetwork AS
 SELECT allfilteredtxs.useraddress, network
 FROM allfilteredtxs,
      eligibleusers
 WHERE allfilteredtxs.useraddress = eligibleusers.useraddress
 GROUP BY (allfilteredtxs.useraddress, network);
+
+\copy (SELECT regexp_replace(json_agg(t)::TEXT, '\s*\n\s*', '', 'g') FROM EligibleUsersNetwork t) TO './data/eligible-users.json';
 
 -- Import blacklisted addresses based on blobs and balance
 
@@ -753,6 +757,7 @@ WHERE txCountUserPoints.useraddress = maxTxValueUserPoints.useraddress
   AND txCountUserPoints.useraddress = networkUserPoints.useraddress;
 
 
+CREATE VIEW AirdropUsers AS
 SELECT useraddress AS address,
        CASE
            WHEN sumPoints > 7 THEN '10400000000000000000000'
@@ -762,3 +767,5 @@ SELECT useraddress AS address,
        END AS earnings,
        'user' AS reasons
 FROM TotalPoints;
+
+\copy (SELECT regexp_replace(json_agg(t)::TEXT, '\s*\n\s*', '', 'g') FROM AirdropUsers t) TO './data/airdrop-users.json';
