@@ -755,10 +755,10 @@ WHERE txCountUserPoints.useraddress = maxTxValueUserPoints.useraddress
 
 SELECT useraddress AS address,
        CASE
-           WHEN sumPoints > 7 THEN '8000000000000000000000'
+           WHEN sumPoints > 7 THEN '10400000000000000000000'
            WHEN sumPoints <= 7
-                AND sumPoints > 3 THEN '6000000000000000000000'
-           WHEN sumPoints <= 3 THEN '4000000000000000000000'
+                AND sumPoints > 3 THEN '7800000000000000000000'
+           WHEN sumPoints <= 3 THEN '5200000000000000000000'
        END AS earnings,
        'user' AS reasons
 FROM TotalPoints;
