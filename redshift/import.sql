@@ -220,6 +220,13 @@ CREATE TABLE rewards_eligible_users (
     PRIMARY KEY(useraddress, network)
 );
 
+CREATE TABLE rewards_airdrop_users (
+    address varchar(150) NOT NULL,
+    earnings decimal(38,0) NOT NULL,
+    reasons VARCHAR(10) NOT NULL,
+    PRIMARY KEY(address)
+);
+
 CREATE TABLE rewards_cow_swap_txs (
     sellamount decimal(38,0) NOT NULL,
     buyamount decimal(38,0) NOT NULL,
@@ -317,6 +324,14 @@ credentials
 JSON 'auto';
 
 select * from rewards_eligible_users;
+
+COPY rewards_airdrop_users
+FROM 's3://datalake.paraswap.io/airdrop-users.json'
+credentials
+'aws_access_key_id=<access-key-id>;aws_secret_access_key=<secret-access-key>'
+JSON 'auto';
+
+select * from rewards_airdrop_users;
 
 COPY rewards_cow_swap_txs
 FROM 's3://datalake.paraswap.io/cow-swap-txs.csv'
